@@ -1,6 +1,6 @@
 <?php
 
-namespace Probeyang\Core\Base;
+namespace Probeyang\Sherlock\Core\Base;
 
 class Controller{
 
