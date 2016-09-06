@@ -1,8 +1,8 @@
 <?php
 
-namespace Probeyang\Core\Web;
+namespace Probeyang\Sherlock\Core\Web;
 
-use Probeyang\Core\Base\Controller;
+use Probeyang\Sherlock\Core\Base\Controller;
 
 class WebController extends Controller{
 
