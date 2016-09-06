@@ -1,6 +1,6 @@
 <?php
 
-namespace Probeyang\Sherlock\Router;
+namespace Probeyang\Router;
 
 class Router {
 
