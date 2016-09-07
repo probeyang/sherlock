@@ -126,6 +126,11 @@ class Router {
             $controllerClass = $segments[0];
         }
         $controller = new $controllerClass();
+        //给sherlock的全局app对象注入数据
+        $app = \Probeyang\Sherlock\Sherlock::app();
+        $app->action = $action;
+        $app->module = $module;
+        $app->controller = $controllerClass;
         if (method_exists($controller, $action) && is_callable([$controller, $action])) {
             $matched ? $controller->$action($matched) : $controller->$action();
         }

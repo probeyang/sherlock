@@ -2,6 +2,10 @@
 
 namespace Probeyang\Sherlock\Core\Base;
 
-class Controller{
+class Controller {
+
+    public function __construct() {
+        
+    }
 
 }
