@@ -1,6 +1,6 @@
 <?php
 
-use \Probeyang\Sherlock\Core\Web\ViewController;
+use \Probeyang\Sherlock\Core\Web\WebController;
 
 if (!function_exists('view')) {
 
@@ -12,7 +12,7 @@ if (!function_exists('view')) {
      * @return \Probeyang\Sherlock\Core\Web\ViewController
      */
     function view($view = null, $data = array()) {
-        $factory = new ViewController();
+        $factory = new WebController();
         return $factory->make($view, $data);
     }
 
