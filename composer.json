@@ -1,12 +1,17 @@
 {
-	"name": "probeyang/sherlock",
-	"description": "PHP router class",
-	"license": "MIT",
-	"require": {
-		"php": ">=5.4"
-	},
-	
-	"autoload": {
-		"psr-4": {"Probeyang\\Sherlock\\": ""}
-	}
+    "name": "probeyang/sherlock",
+    "description": "PHP router class",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Probeyang\\Sherlock\\": ""
+        },
+        "files": [
+            "helpers.php",
+            "Sherlock.php"
+        ]
+    }
 }
