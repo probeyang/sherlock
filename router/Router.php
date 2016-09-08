@@ -125,12 +125,15 @@ class Router {
         } else {
             $controllerClass = $segments[0];
         }
-        $controller = new $controllerClass();
         //给sherlock的全局app对象注入数据
         $app = \Probeyang\Sherlock\Sherlock::app();
         $app->action = $action;
         $app->module = $module;
         $app->controller = $controllerClass;
+        //获取控制器命名空间地址
+        $namespaceController = ucfirst($app->appName) . '\\' . 'Controllers\\' . $controllerClass;
+        $controller = new $namespaceController();
+
         if (method_exists($controller, $action) && is_callable([$controller, $action])) {
             $matched ? $controller->$action($matched) : $controller->$action();
         }
