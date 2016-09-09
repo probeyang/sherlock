@@ -136,23 +136,6 @@ class Router {
         $app->action = $action;
         $app->module = $module;
         $app->controller = $controllerClass;
-        if (!defined('BASE_DIR')) {
-            if (!defined('SHERLOCK_DIR')) {
-                $routerDir = DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'probeyang' . DIRECTORY_SEPARATOR . 'sherlock' . DIRECTORY_SEPARATOR . 'router';
-            } else {
-                $routerDir = SHERLOCK_DIR . DIRECTORY_SEPARATOR . 'router';
-            }
-            $baseDir = str_replace($routerDir, '', __DIR__);
-        } else {
-            $baseDir = BASE_DIR;
-        }
-        //获取控制器绝对路径
-//        $controllerFilePath = $baseDir . '\\' . $app->appName . '\\' . 'controllers\\' . $controllerClass . '.php';
-//        if(!is_file($controllerFilePath)){
-//            throw new \Illuminate\Contracts\Filesystem\FileNotFoundException("控制器文件不存在！");
-//        }
-//        //引入控制器
-//        require $controllerFilePath;
         //实例化控制器
         $controller = new $namespaceController();
         if (method_exists($controller, $action) && is_callable([$controller, $action])) {
@@ -182,7 +165,6 @@ class Router {
     }
 
     private static function _request($method, $args) {
-//        $uri = dirname($_SERVER['PHP_SELF']) . DIRECTORY_SEPARATOR . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
         $uri = dirname($_SERVER['PHP_SELF']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
         $uri = str_replace('/index.php', '', $uri);
         $uri = ($uri == '\/') ? '' : $uri;

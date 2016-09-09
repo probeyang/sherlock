@@ -17,3 +17,22 @@ if (!function_exists('view')) {
     }
 
 }
+
+if (!function_exists('baseDir')) {
+
+    /**
+     * 获取框架的根目录路径
+     * 
+     * @return type
+     */
+    function baseDir() {
+        if (!defined('BASE_DIR')) {
+            $routerDir = DS . 'vendor' . DS . 'probeyang' . DS . 'sherlock';
+            $baseDir = str_replace($routerDir, '', __DIR__);
+        } else {
+            $baseDir = BASE_DIR;
+        }
+        return $baseDir;
+    }
+
+}

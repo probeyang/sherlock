@@ -85,13 +85,13 @@ class WebController extends Controller {
         if ($this->viewFileName) {
             return $this->viewFileName;
         }
-        $this->sherlockBasePath = str_replace(SHERLOCK_WEB_DIR, DS, __DIR__);
+        $this->sherlockBasePath = baseDir();
         if ($module) {
-            $this->viewFileName = $this->sherlockBasePath . $this->appName . DS
+            $this->viewFileName = $this->sherlockBasePath . DS . $this->appName . DS
                     . $module . DS . $this->viewName . DS
                     . $controller . DS . $action . $this->suffix;
         } else {
-            $this->viewFileName = $this->sherlockBasePath . $this->appName . DS . $this->viewName
+            $this->viewFileName = $this->sherlockBasePath . DS . $this->appName . DS . $this->viewName
                     . DS . $controller . DS . $action . $this->suffix;
         }
         return $this->viewFileName;
@@ -177,7 +177,7 @@ class WebController extends Controller {
         }
         $viewFilePath = $this->getViewFileName($action, $controller, $module);
         if (!is_file($viewFilePath)) {
-            throw new \UnexpectedValueException("找不到视图文件！");
+            throw new \UnexpectedValueException("找不到视图文件！文件地址：" . $viewFilePath);
         }
         $this->view = $viewFilePath;
         return $this;
