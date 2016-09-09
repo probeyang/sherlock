@@ -118,22 +118,43 @@ class Router {
     private static function _action($controllerAction, $module = '', $group = '', $matched = []) {
         $segments = explode('@', $controllerAction);
         $action = end($segments);
-        if ($group && $module) {
-            $controllerClass = '\\' . $group . '\\' . $module . '\\' . $segments[0];
-        } elseif (!$group && $module) {
-            $controllerClass = '\\' . $module . '\\' . $segments[0];
-        } else {
-            $controllerClass = $segments[0];
-        }
         //给sherlock的全局app对象注入数据
         $app = \Probeyang\Sherlock\Sherlock::app();
+        if ($group && $module) {
+            $controllerClass = '\\' . $group . '\\' . $module . '\\' . $segments[0];
+            //获取控制器命名空间地址
+            $namespaceController = ucfirst($app->appName) . '\\' . ucfirst($group) . '\\' . ucfirst($module) . '\\Controllers\\' . $controllerClass;
+        } elseif (!$group && $module) {
+            $controllerClass = '\\' . $module . '\\' . $segments[0];
+            //获取控制器命名空间地址
+            $namespaceController = ucfirst($app->appName) . '\\' . ucfirst($module) . '\\Controllers\\' . $controllerClass;
+        } else {
+            $controllerClass = $segments[0];
+            //获取控制器命名空间地址
+            $namespaceController = ucfirst($app->appName) . '\\' . 'Controllers\\' . $controllerClass;
+        }
         $app->action = $action;
         $app->module = $module;
         $app->controller = $controllerClass;
-        //获取控制器命名空间地址
-        $namespaceController = ucfirst($app->appName) . '\\' . 'Controllers\\' . $controllerClass;
+        if (!defined('BASE_DIR')) {
+            if (!defined('SHERLOCK_DIR')) {
+                $routerDir = DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'probeyang' . DIRECTORY_SEPARATOR . 'sherlock' . DIRECTORY_SEPARATOR . 'router';
+            } else {
+                $routerDir = SHERLOCK_DIR . DIRECTORY_SEPARATOR . 'router';
+            }
+            $baseDir = str_replace($routerDir, '', __DIR__);
+        } else {
+            $baseDir = BASE_DIR;
+        }
+        //获取控制器绝对路径
+//        $controllerFilePath = $baseDir . '\\' . $app->appName . '\\' . 'controllers\\' . $controllerClass . '.php';
+//        if(!is_file($controllerFilePath)){
+//            throw new \Illuminate\Contracts\Filesystem\FileNotFoundException("控制器文件不存在！");
+//        }
+//        //引入控制器
+//        require $controllerFilePath;
+        //实例化控制器
         $controller = new $namespaceController();
-
         if (method_exists($controller, $action) && is_callable([$controller, $action])) {
             $matched ? $controller->$action($matched) : $controller->$action();
         }

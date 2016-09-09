@@ -6,8 +6,6 @@ use \Probeyang\Sherlock\Core\Base\Controller;
 
 class WebController extends Controller {
 
-    const SHERLOCK_WEB_PATH = 'vendor\probeyang\sherlock\core\web';
-
     private $sherlockBasePath;
     public $module = '';
     public $controller = '';
@@ -87,14 +85,14 @@ class WebController extends Controller {
         if ($this->viewFileName) {
             return $this->viewFileName;
         }
-        $this->sherlockBasePath = str_replace(self::SHERLOCK_WEB_PATH, '', __DIR__);
+        $this->sherlockBasePath = str_replace(SHERLOCK_WEB_DIR, DS, __DIR__);
         if ($module) {
-            $this->viewFileName = $this->sherlockBasePath . $this->appName . DIRECTORY_SEPARATOR
-                    . $module . DIRECTORY_SEPARATOR . $this->viewName . DIRECTORY_SEPARATOR
-                    . $controller . DIRECTORY_SEPARATOR . $action . $this->suffix;
+            $this->viewFileName = $this->sherlockBasePath . $this->appName . DS
+                    . $module . DS . $this->viewName . DS
+                    . $controller . DS . $action . $this->suffix;
         } else {
-            $this->viewFileName = $this->sherlockBasePath . $this->appName . DIRECTORY_SEPARATOR . $this->viewName
-                    . DIRECTORY_SEPARATOR . $controller . DIRECTORY_SEPARATOR . $action . $this->suffix;
+            $this->viewFileName = $this->sherlockBasePath . $this->appName . DS . $this->viewName
+                    . DS . $controller . DS . $action . $this->suffix;
         }
         return $this->viewFileName;
     }
