@@ -119,7 +119,7 @@ class Router {
         $segments = explode('@', $controllerAction);
         $action = end($segments);
         //给sherlock的全局app对象注入数据
-        $app = \Probeyang\Sherlock\Sherlock::app();
+        $app = \Holmes::app();
         if ($group && $module) {
             $controllerClass = '\\' . $group . '\\' . $module . '\\' . $segments[0];
             //获取控制器命名空间地址

@@ -19,7 +19,7 @@ class WebController extends Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->app = \Probeyang\Sherlock\Sherlock::app();
+        $this->app = \Holmes::app();
     }
 
     /**
@@ -86,13 +86,12 @@ class WebController extends Controller {
             return $this->viewFileName;
         }
         $this->sherlockBasePath = baseDir();
-        $app = \Probeyang\Sherlock\Sherlock::app();
         if ($module) {
-            $this->viewFileName = $this->sherlockBasePath . '/' . $app->appName . '/'
+            $this->viewFileName = $this->sherlockBasePath . '/' . $this->app->appName . '/'
                     . 'modules' . '/' . strtolower($module) . '/' . $this->viewName . '/'
                     . $controller . '/' . $action . $this->suffix;
         } else {
-            $this->viewFileName = $this->sherlockBasePath . '/' . $app->appName . '/' . $this->viewName
+            $this->viewFileName = $this->sherlockBasePath . '/' . $this->app->appName . '/' . $this->viewName
                     . '/' . $controller . '/' . $action . $this->suffix;
         }
         return $this->viewFileName;
