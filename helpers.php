@@ -27,7 +27,7 @@ if (!function_exists('baseDir')) {
      */
     function baseDir() {
         if (!defined('BASE_DIR')) {
-            $routerDir = DS . 'vendor' . DS . 'probeyang' . DS . 'sherlock';
+            $routerDir = DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'probeyang' . DIRECTORY_SEPARATOR . 'sherlock';
             $baseDir = str_replace($routerDir, '', __DIR__);
         } else {
             $baseDir = BASE_DIR;

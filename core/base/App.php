@@ -89,20 +89,20 @@ class App {
     }
 
     public function loadFiles($config = []) {
-        if (isset($config['modules'])) {
-            $this->modules = array_keys($config['modules']);
+        if (isset($config['main']['modules'])) {
+            $this->modules = array_keys($config['main']['modules']);
         }
         $dirArr = $moduleModelsDir = $moduleControllersDir = [];
         $baseDir = baseDir();
         if ($this->modules) {
             foreach ($this->modules as $module) {
-                $dirArr[] = $baseDir . DS . $this->appName . DS . 'modules' . DS . $module . DS . 'models';
-                $dirArr[] = $baseDir . DS . $this->appName . DS . 'modules' . DS . $module . DS . 'controllers';
+                $dirArr[] = $baseDir . '/' . $this->appName . '/' . 'modules' . '/' . $module . '/' . 'models';
+                $dirArr[] = $baseDir . '/' . $this->appName . '/' . 'modules' . '/' . $module . '/' . 'controllers';
             }
         }
         $tempDir = [
-            $baseDir . DS . $this->appName . DS . 'models',
-            $baseDir . DS . $this->appName . DS . 'controllers'
+            $baseDir . '/' . $this->appName . '/' . 'models',
+            $baseDir . '/' . $this->appName . '/' . 'controllers'
         ];
         $dirArr = array_merge($dirArr, $tempDir);
         foreach ($dirArr as $dir) {

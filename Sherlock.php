@@ -1,8 +1,6 @@
 <?php
 
-namespace Probeyang\Sherlock;
-
-define('DS', DIRECTORY_SEPARATOR);
+//namespace Probeyang\Sherlock;
 
 use Probeyang\Sherlock\Core\Base\App;
 

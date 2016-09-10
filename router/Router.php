@@ -125,9 +125,9 @@ class Router {
             //获取控制器命名空间地址
             $namespaceController = ucfirst($app->appName) . '\\' . ucfirst($group) . '\\' . ucfirst($module) . '\\Controllers\\' . $controllerClass;
         } elseif (!$group && $module) {
-            $controllerClass = '\\' . $module . '\\' . $segments[0];
+            $controllerClass = $segments[0];
             //获取控制器命名空间地址
-            $namespaceController = ucfirst($app->appName) . '\\' . ucfirst($module) . '\\Controllers\\' . $controllerClass;
+            $namespaceController = ucfirst($app->appName) . '\\Modules\\' . ucfirst($module) . '\\Controllers\\' . $controllerClass;
         } else {
             $controllerClass = $segments[0];
             //获取控制器命名空间地址
@@ -165,7 +165,8 @@ class Router {
     }
 
     private static function _request($method, $args) {
-        $uri = dirname($_SERVER['PHP_SELF']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
+//        $uri = dirname($_SERVER['PHP_SELF']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
+        $uri = dirname($_SERVER['SCRIPT_NAME']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
         $uri = str_replace('/index.php', '', $uri);
         $uri = ($uri == '\/') ? '' : $uri;
         array_push(self::$routes, $uri);

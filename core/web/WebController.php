@@ -86,13 +86,14 @@ class WebController extends Controller {
             return $this->viewFileName;
         }
         $this->sherlockBasePath = baseDir();
+        $app = \Probeyang\Sherlock\Sherlock::app();
         if ($module) {
-            $this->viewFileName = $this->sherlockBasePath . DS . $this->appName . DS
-                    . $module . DS . $this->viewName . DS
-                    . $controller . DS . $action . $this->suffix;
+            $this->viewFileName = $this->sherlockBasePath . '/' . $app->appName . '/'
+                    . 'modules' . '/' . strtolower($module) . '/' . $this->viewName . '/'
+                    . $controller . '/' . $action . $this->suffix;
         } else {
-            $this->viewFileName = $this->sherlockBasePath . DS . $this->appName . DS . $this->viewName
-                    . DS . $controller . DS . $action . $this->suffix;
+            $this->viewFileName = $this->sherlockBasePath . '/' . $app->appName . '/' . $this->viewName
+                    . '/' . $controller . '/' . $action . $this->suffix;
         }
         return $this->viewFileName;
     }
