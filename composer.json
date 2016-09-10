@@ -13,7 +13,6 @@
         },
         "files": [
             "helpers.php",
-            "Sherlock.php",
             "Holmes.php"
         ]
     }
