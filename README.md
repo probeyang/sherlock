@@ -2,12 +2,15 @@
 #1.不需要你下载本框架代码也不用拉取本框架代码，交给composer来做。
 #2.新建一个文件夹，例如holmes，在文件夹中新建composer.json文件
 #3.在composer.json文件中添加内容：
+
   {
       "require": {
           "probeyang/sherlock": "dev-master"
       }
   }
+  
 #4.在当前文件夹下使用composer命令：
+
  composer update
  
 #如果你觉得下面写的一堆东西乱七八糟不想看，那么可以直接下载附件包，解压就可以使用：
