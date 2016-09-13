@@ -1,4 +1,3 @@
-# sherlock
 #sherlock框架使用说明书
 #1.不需要你下载本框架代码也不用拉取本框架代码，交给composer来做。
 #2.新建一个文件夹，例如holmes，在文件夹中新建composer.json文件
