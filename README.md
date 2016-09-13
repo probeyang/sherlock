@@ -1,9 +1,5 @@
 # sherlock
-sherlock框架使用说明书
-
-#如果你觉得上面写的一堆东西乱七八糟不想看，那么可以直接下载附件包，解压就可以使用：
-https://github.com/probeyang/sherlock/blob/master/sherlock.zip
-
+#sherlock框架使用说明书
 #1.不需要你下载本框架代码也不用拉取本框架代码，交给composer来做。
 #2.新建一个文件夹，例如holmes，在文件夹中新建composer.json文件
 #3.在composer.json文件中添加内容：
@@ -14,6 +10,11 @@ https://github.com/probeyang/sherlock/blob/master/sherlock.zip
   }
 #4.在当前文件夹下使用composer命令：
  composer update
+ 
+#如果你觉得下面写的一堆东西乱七八糟不想看，那么可以直接下载附件包，解压就可以使用：
+https://github.com/probeyang/sherlock/blob/master/sherlock.zip
+下面的讲解就是讲解这个解压包中的各个文件夹，文件的用处和用法的。
+ 
 #5.等待代码拉取完代码后，在composer.json平级目录下面新建几个文件夹：
   （1）app -》 项目代码文件夹，可以改为其他名字，但需要在代码中设置它：
       Holmes::app()->appName
