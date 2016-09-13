@@ -35,6 +35,7 @@ https://github.com/probeyang/sherlock/blob/master/sherlock.zip
 database.php内容示例：
 
 <?php
+
 return [
     'driver' => 'mysql',
     'host' => 'localhost',
@@ -50,6 +51,7 @@ return [
 main.php内容示例：
 
 <?php
+
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -69,6 +71,7 @@ return $config;
 routes.php内容示例：
 
 <?php
+
 use Probeyang\Sherlock\Router\Router;
 
 Router::get('hello', function() {
@@ -95,6 +98,7 @@ Router::$error_callback = function() {
 index.php内容非常简洁仅仅是这样：
 
 <?php
+
 //定义BASE_DIR
 define('BASE_DIR', dirname(__DIR__));
 // Autoload 自动载入
