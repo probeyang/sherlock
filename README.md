@@ -34,6 +34,7 @@ https://github.com/probeyang/sherlock/blob/master/sherlock.zip
 
 database.php内容示例：
 
+<?php
 return [
     'driver' => 'mysql',
     'host' => 'localhost',
@@ -44,9 +45,11 @@ return [
     'collation' => 'utf8_general_ci',
     'prefix' => ''
 ];
+?>
 
 main.php内容示例：
 
+<?php
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -61,9 +64,11 @@ $config = [
     ],
 ];
 return $config;
+?>
 
 routes.php内容示例：
 
+<?php
 use Probeyang\Sherlock\Router\Router;
 
 Router::get('hello', function() {
@@ -83,17 +88,20 @@ Router::get('goods/report/start', 'Goods/ReportController@start');
 Router::$error_callback = function() {
     throw new Exception("路由无匹配项 404 Not Found");
 };
+?>
 
  ##6-3.public文件夹
 网站根目录，放index.php和.htaccess文件和一些静态资源等
 index.php内容非常简洁仅仅是这样：
 
+<?php
 //定义BASE_DIR
 define('BASE_DIR', dirname(__DIR__));
 // Autoload 自动载入
 require BASE_DIR . '/vendor/autoload.php';
 //系统运行
 Holmes::app()->run();
+?>
 
 就可以开始项目运行了。
 
