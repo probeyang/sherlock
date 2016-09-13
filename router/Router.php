@@ -8,7 +8,7 @@ class Router {
     public static $callbacks = [];
     public static $methods = [];
     public static $error_callback;
-    public static $stop = false;
+    public static $stop = true;
     public static $routed = false; //判断是否路由成功，如果不成功，则显示错误页面。但如果不想显示错误页面，可以人为设置它为成功。也可以设置stop为true
     public static $patterns = [
         ':any' => '[^/]+',
@@ -58,33 +58,43 @@ class Router {
                 }
             }
         } else {
-            //正则匹配
-            $searchs = array_keys(self::$patterns);
-            $replaces = array_values(self::$patterns);
-            $routeIndex = 0;
-            foreach (self::$routes as $route) {
-                if (strpos($route, ':') !== false) {
-                    $route = str_replace($searchs, $replaces, $route);
-                }
-                if (preg_match('#^' . $route . '$#', $uri, $matched)) {
-                    if (self::$methods[$routeIndex] == $method || self::$methods[$routeIndex] == 'ANY' || self::$methods[$routeIndex] == 'ALL') {
-                        self::$routed = true;
-                        array_shift($matched);
-                        if (is_object(self::$callbacks[$routeIndex])) {
-                            call_user_func_array(self::$callbacks[$routeIndex], $matched);
-                        } else {
-                            list($group, $module, $controllerAction) = self::_groupAndModuleAndController($routeIndex);
-                            if ($controllerAction) {
-                                self::_action($controllerAction, $module, $group, $matched);
+            list($module, $controller, $action) = explode('/', trim($uri, '/'));
+            if (self::_isExist($controller, $module)) {
+                //----------兼容一些不配置routes信息的，也进行路由。------开始----------
+                self::$routed = true;
+                $controllerAction = ucfirst($controller) . 'Controller@' . $action;
+                self::_action($controllerAction, $module);
+                //----------兼容一些不配置routes信息的，也进行路由。------结束----------
+            } else {
+                //正则匹配
+                $searchs = array_keys(self::$patterns);
+                $replaces = array_values(self::$patterns);
+                $routeIndex = 0;
+                foreach (self::$routes as $route) {
+                    if (strpos($route, ':') !== false) {
+                        $route = str_replace($searchs, $replaces, $route);
+                    }
+                    if (preg_match('#^' . $route . '$#', $uri, $matched)) {
+                        if (self::$methods[$routeIndex] == $method || self::$methods[$routeIndex] == 'ANY' || self::$methods[$routeIndex] == 'ALL') {
+                            self::$routed = true;
+                            array_shift($matched);
+                            if (is_object(self::$callbacks[$routeIndex])) {
+                                call_user_func_array(self::$callbacks[$routeIndex], $matched);
+                            } else {
+                                list($group, $module, $controllerAction) = self::_groupAndModuleAndController($routeIndex);
+                                if ($controllerAction) {
+                                    self::_action($controllerAction, $module, $group, $matched);
+                                }
+                            }
+                            if (self::$stop) {
+                                return;
                             }
                         }
-                        if (self::$stop) {
-                            return;
-                        }
                     }
+                    $routeIndex++;
                 }
-                $routeIndex++;
             }
+            
         }
         if (self::$stop) {
             return;
@@ -92,6 +102,23 @@ class Router {
         if (!self::$routed) {
             self::_error();
         }
+    }
+
+    private static function _isExist($controller, $module = '') {
+        $app = \Holmes::app();
+        $baseDir = baseDir();
+        if ($module) {
+            $fileName = $baseDir . '/' . $app->appName . '/' . 'modules' . '/' . $module . '/' . 'controllers/' . ucfirst($controller) . 'Controller.php';
+            if (is_file($fileName)) {
+                return true;
+            }
+            return false;
+        }
+        $fileName = $baseDir . '/' . $app->appName . 'controllers/' . ucfirst($controller) . 'Controller.php';
+        if (is_file($fileName)) {
+            return true;
+        }
+        return false;
     }
 
     private static function _groupAndModuleAndController($routeKey) {
@@ -169,6 +196,7 @@ class Router {
         $uri = dirname($_SERVER['SCRIPT_NAME']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
         $uri = str_replace('/index.php', '', $uri);
         $uri = ($uri == '\/') ? '' : $uri;
+//        var_dump($uri,$_SERVER['SCRIPT_NAME'],$method,$args);exit;
         array_push(self::$routes, $uri);
         array_push(self::$methods, strtoupper($method));
         array_push(self::$callbacks, $args['1']);
