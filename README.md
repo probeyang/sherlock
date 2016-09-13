@@ -33,7 +33,6 @@ https://github.com/probeyang/sherlock/blob/master/sherlock.zip
  ##6-2.config文件夹下面文件名是固定的：database.php(数据库配置信息),main.php(网站配置信息),routes.php(路由配置信息)
 
 database.php内容示例：
-<?php
 
 return [
     'driver' => 'mysql',
@@ -47,7 +46,6 @@ return [
 ];
 
 main.php内容示例：
-<?php
 
 $config = [
     'id' => 'basic',
@@ -65,7 +63,6 @@ $config = [
 return $config;
 
 routes.php内容示例：
-<?php
 
 use Probeyang\Sherlock\Router\Router;
 
@@ -90,7 +87,6 @@ Router::$error_callback = function() {
  ##6-3.public文件夹
 网站根目录，放index.php和.htaccess文件和一些静态资源等
 index.php内容非常简洁仅仅是这样：
-<?php
 
 //定义BASE_DIR
 define('BASE_DIR', dirname(__DIR__));
