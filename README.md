@@ -16,9 +16,13 @@ https://github.com/probeyang/sherlock/blob/master/sherlock.zip
  
 #5.等待代码拉取完代码后，在composer.json平级目录下面新建几个文件夹：
   （1）app -》 项目代码文件夹，可以改为其他名字，但需要在代码中设置它：
+  
       Holmes::app()->appName
+      
   （2）config -》 配置文件夹
+  
   （3）public -》 项目根目录
+  
 #6.分别说明三个文件夹内容：
  ##6-1.app文件夹：里面内容为controllers，models，views，modules文件夹。注意点：
  （1）controllers里面的控制器名称为：HomeController.php,类名和文件名一致。web项目的话必须继承自Probeyang\Sherlock\Core\Web\WebController
