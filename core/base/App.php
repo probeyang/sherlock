@@ -16,6 +16,9 @@ class App {
     public $action;
     public $modules;
     public $includeFiles = [];
+    public $request = [];
+    public $post = [];
+    public $get = [];
 
     public function setAction($action) {
         $this->action = $action;
@@ -54,6 +57,9 @@ class App {
         if ($config) {
             $this->config = $config;
         }
+
+        //load request args
+        $this->loadRequestArgs();
         // Eloquent ORM
         $this->dbHandler();
         //whoops 错误提示
@@ -72,6 +78,55 @@ class App {
                 $this->config[$name] = require $fileName;
             }
         }
+    }
+
+    public function loadRequestArgs() {
+        $this->request();
+        $this->post();
+        $this->get();
+    }
+
+    public function request() {
+        $this->request = $this->reverseArgs($_REQUEST);
+        return $this->request;
+    }
+
+    public function post() {
+        $this->post = $this->reverseArgs($_POST);
+        return $this->post;
+    }
+
+    public function get() {
+        $this->get = $this->reverseArgs($_GET);
+        return $this->get;
+    }
+
+//    function sec(&$array) {
+//        //如果是数组，遍历数组，递归调用 
+//        if (is_array($array)) {
+//            foreach ($array as $k => $v) {
+//                $array [$k] = sec($v);
+//            }
+//        } else if (is_string($array)) {
+//            //使用addslashes函数来处理 
+//            $array = addslashes($array);
+//        } else if (is_numeric($array)) {
+//            $array = intval($array);
+//        }
+//        return $array;
+//    }
+
+    public function reverseArgs(&$args) {
+        if (is_string($args)) {
+            $args = addslashes($args);
+        }else if(is_numeric($args)){
+            $args = intval($args);
+        } else {
+            foreach ($args as $key => $arg) {
+                $args[$key] = $this->reverseArgs($arg);
+            }
+        }
+        return $args;
     }
 
     public function dbHandler() {
@@ -107,6 +162,10 @@ class App {
         $dirArr = array_merge($dirArr, $tempDir);
         foreach ($dirArr as $dir) {
             $this->includeFiles($dir);
+        }
+        //如果存在components文件夹就加载components
+        if (file_exists($baseDir . '/components')) {
+            $this->includeFiles($baseDir . '/components');
         }
     }
 

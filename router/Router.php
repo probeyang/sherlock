@@ -41,7 +41,7 @@ class Router {
     public static function dispatch() {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['PHP_SELF'], PHP_URL_PATH);
-        $uri = str_replace('/index.php', '', $uri);
+        $uri = str_replace('/index.php', '/', $uri);
         self::$routes = str_replace('//', '/', self::$routes);
         if (in_array($uri, self::$routes)) {
             $routeIndex = current(array_keys(self::$routes, $uri));
@@ -195,7 +195,7 @@ class Router {
 //        $uri = dirname($_SERVER['PHP_SELF']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
         $uri = dirname($_SERVER['SCRIPT_NAME']) . '/' . $args[0]; // dirname($_SERVER['PHP_SELF'])->\,/index.php
         $uri = str_replace('/index.php', '', $uri);
-        $uri = ($uri == '\/') ? '' : $uri;
+        $uri = ($uri == '\/') ? '/' : $uri;
 //        var_dump($uri,$_SERVER['SCRIPT_NAME'],$method,$args);exit;
         array_push(self::$routes, $uri);
         array_push(self::$methods, strtoupper($method));

@@ -16,10 +16,14 @@ class WebController extends Controller {
     public $viewName = 'views';
     public $viewFileName = '';
     public $app;
+    public $config;
+    public $layout;
 
     public function __construct() {
         parent::__construct();
         $this->app = \Holmes::app();
+        $this->config = $this->app->config;
+        $this->layout = $this->layout? : BASE_DIR . '/app/views/layouts/main.php';
     }
 
     /**
@@ -70,7 +74,11 @@ class WebController extends Controller {
             throw new \Exception('view only String args', '404');
         }
         $this->getViewFileName($action, $controller, $module);
-        return require $this->viewFileName;
+        $content = $this->viewFileName;
+        if ($this->layout === false) {
+            return require $content;
+        }
+        return require $this->layout;
     }
 
     /**
