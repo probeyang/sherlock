@@ -7,7 +7,7 @@
         "illuminate/database": "*",
         "filp/whoops": "*"
     },
-    "auto": {
+    "autoload": {
         "psr-4": {
             "Probeyang\\Sherlock\\": "src/"
         },
