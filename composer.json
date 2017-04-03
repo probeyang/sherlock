@@ -1,15 +1,15 @@
 {
     "name": "probeyang/sherlock",
-    "description": "PHP router class",
+    "description": "PHP simple framework",
     "license": "MIT",
     "require": {
         "php": ">=5.4",
         "illuminate/database": "*",
         "filp/whoops": "*"
     },
-    "autoload": {
+    "auto": {
         "psr-4": {
-            "Probeyang\\Sherlock\\": ""
+            "Probeyang\\Sherlock\\": "src/"
         },
         "files": [
             "helpers.php",
